@@ -1,0 +1,177 @@
+/* Style Sheet for Connect 4  */
+
+body {
+    background-color: #742f42;
+    align: center;
+    margin:0px;
+    padding:0px;
+    min-width:825px; /* suppose you want minimun width of 1000px */
+    width: auto !important;  /* Firefox will set width as auto */
+    width:825px;             /* As IE ignores !important it will set width as 1000px; */
+}
+
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
+img{
+    display: block;
+    margin: 0 auto;
+
+}
+#player1{
+    float: left;
+    padding-left:20px;
+
+}
+#player2{
+    float: right;
+    position:relative;
+    padding-right:20px;
+
+}
+#winDraw{
+  margin:auto;
+  align:center;
+  visibility: hidden;
+  font-family:Verdana, sans-serif;
+  font-size: 3em;
+  font-weight:bold;
+  text-align: center;
+  color: white;
+
+}
+#banner{
+  font-family: Verdana, sans-serif;
+  font-style: normal;
+  font-size: 5em;
+  margin:auto;
+  min-width: 300px;
+  text-align: center;
+  color:white;
+  /*
+  border-bottom: 3px solid #f9b508;
+  margin-bottom: 15px;
+  */
+}
+
+
+.button{
+  font-family:Verdana, sans-serif;
+  font-size: 1em;
+  border: none;
+  background-color: #f9b508;
+  margin-left: 15px;
+  margin-right: 15px;
+  border: 1px solid #f9b508;
+
+}
+.button:hover{
+  background-color: #9c1f2d;
+  border: 1px solid #f9b508;
+}
+table, th, td {
+    border: 0px solid black;
+    border-collapse: collapse;
+    border-spacing:0px;
+    margin:auto;
+}
+footer{
+  padding-top: 50px;
+  text-align: center;
+}
+
+tr:hover {
+         background-color: #000000;
+       }
+       /*
+#play{
+  font-family:Verdana, sans-serif;
+  font-size: 2em;
+  font-weight:bold;
+  text-align: center;
+
+  border-radius:12px;
+  background: #dd7f0b;
+  width: 100px;
+  height: 75px;
+  margin: auto;
+  display: inline;
+  align-items: center;
+}
+#play:hover{
+background-color:red;
+cursor:default;
+
+}
+#playButton{
+  margin: auto;
+  display: inline;
+  text-align: center;
+  align-items: center;
+}
+*/
+/*nav menu */
+
+.menu{
+  margin: auto;
+  display: block;
+  width: 50%;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  padding-bottom: 15px;
+
+  border-bottom: 3px solid  #9c1f2d;
+
+
+}
+a:link {
+    text-decoration: none;
+}
+#playAgain{
+  visibility:hidden;
+  border: 3px solid  #dd7f0b;
+  background-color: #f9b508;
+  align:center;
+  margin: auto;
+  margin-top: 15px;
+  width:300px;
+  align-items: center;
+  font-family:Verdana, sans-serif;
+  font-size: 1em;
+  text-align: center;
+  padding:3px;
+}
+#playAgain-yes,#playAgain-no{
+  font-family:Verdana, sans-serif;
+  font-size: 1em;
+  border: none;
+  background-color: #9c1f2d;
+  margin-left: 15px;
+  margin-right: 15px;
+  border: 1px solid #9c1f2d;
+}
+
+#playAgain-yes:hover,#playAgain-no:hover {
+  background-color: #742f42;
+}
+
+
+#main{
+  margin:auto;
+  width:50%;
+  align-items: center;
+  text-align: center;
+
+}
+.board {
+  margin:auto;
+  display: table;
+  visibility:visible;
+        }
+.tableRow { display: table-row; }
+.tableHeader { display: table-header-group; }
+.rTableBody { display: table-row-group; }
+.rTableFoot { display: table-footer-group; }
+.tableCell, .tableHeader { display: table-cell; }
