@@ -31,16 +31,16 @@ function placePiece(column){
         var id= i +" "+ column; /*sets up the variable as a string*/
 
         if(currentPlayer==1){
-          document.getElementById(id).src='red1.png';
+          document.getElementById(id).src='images/red1.png';
           currentPlayer=2;
-          document.getElementById('p1').src='redplayer2.png';
-          document.getElementById('p2').src='yellowplayer1.png';
+          document.getElementById('p1').src='images/redplayer2.png';
+          document.getElementById('p2').src='images/yellowplayer1.png';
         }
         else {
-          document.getElementById(id).src='yellow1.png';
+          document.getElementById(id).src='images/yellow1.png';
           currentPlayer=1;
-          document.getElementById('p1').src='redplayer1.png';
-          document.getElementById('p2').src='yellowplayer2.png';
+          document.getElementById('p1').src='images/redplayer1.png';
+          document.getElementById('p2').src='images/yellowplayer2.png';
 
         }
         placement=i;
@@ -51,25 +51,21 @@ function placePiece(column){
       alert("Please click on a valid placement.");
     }
   }
-  if(checkDraw(board)==true){
+  if(checkDraw(board)){
     draw=true;
   }
-  /*check board for winner ()*/
-
   if(checkHor(board,column, placement)){
     winningMove=true;
   }
   if(checkVer(board,column, placement)){
     winningMove=true;
   }
-  if(checkDia1(board,column, placement)==true){
+  if(checkDia1(board,column, placement)){
     winningMove=true;
   }
   if(checkDia2(board,column, placement)){
     winningMove=true;
   }
-
-
   if(winningMove==true){
     var winPlayer;
     document.getElementById('winDraw').style.visibility='visible';
@@ -83,19 +79,13 @@ function placePiece(column){
     }
     document.getElementById('winDraw').innerHTML= winPlayer + " Player Wins!";
     playAgain();
-
   }
-  if(draw==true){
+
+  if(draw==true && winningMove==false){
     document.getElementById('winDraw').style.visibility='visible';
     document.getElementById('winDraw').innerHTML='A Draw!' ;
     playAgain();
-
-
   }
-
-/*
-TRY TO MAKE WHOLE COLUMS HOVER ABLE INSTEAD OF JUST TOP row
-*/
 }
 
 function playAgain(){
@@ -115,19 +105,15 @@ function playAgain(){
   }
   document.getElementById('playerOneWins').innerHTML="Wins: " + p1Wins;
   document.getElementById('playerTwoWins').innerHTML="Wins: " + p2Wins;
-
 }
+
 function thankYou(){
   document.getElementById('playAgain').style.visibility='hidden';
   document.getElementById('winDraw').style.visibility='visible';
   document.getElementById('winDraw').innerHTML='Thanks for playing!';
   document.getElementById('board').style.visibility='hidden';
-  document.getElementById('p1').src='redplayer2.png';
-  document.getElementById('p2').src='yellowplayer2.png';
-
-
-
-
+  document.getElementById('p1').src='images/redplayer2.png';
+  document.getElementById('p2').src='images/yellowplayer2.png';
 }
 
 function checkHor(board,column,placement){
@@ -135,8 +121,8 @@ function checkHor(board,column,placement){
     var piece=board[placement][column-1];
     for (var j=0;j<=2;j++){
       var val=board[placement][j];
-      if (board[placement][j+1]==val && board[placement][j+2]==val
-        && board[placement][j+3]==val && val!=0){
+      if (val!==0 && board[placement][j+1]==val && board[placement][j+2]==val
+        && board[placement][j+3]==val){
           return true;
       }
     }
@@ -147,8 +133,8 @@ function checkVer(board,column,placement){
     var piece=board[placement][column-1];
     for (var j=0;j<=3;j++){
       var val=board[j][column-1];
-      if (board[j+1][column-1]==val && board[j+2][column-1]==val
-        && board[j+3][column-1]==val && val!=0){
+      if (val!==0 && board[j+1][column-1]==val && board[j+2][column-1]==val
+        && board[j+3][column-1]==val){
           return true;
       }
     }
@@ -162,8 +148,8 @@ function checkDia1(board,column,placement){
       for (var j=0;j<=2;j++){
         for (var y=0;y<=3;y++){
         var val=board[y][j];
-        if (board[y+1][j+1]==val && board[y+2][j+2]==val
-          && board[y+3][j+3]==val && val!=0){
+        if (val!==0 && board[y+1][j+1]==val && board[y+2][j+2]==val
+          && board[y+3][j+3]==val){
             return true;
         }
       }
@@ -176,8 +162,8 @@ function checkDia2(board,column,placement){
   for (var j=0;j<=2;j++){
     for (var y=3;y<=6;y++){
     var val=board[y][j];
-    if (board[y-1][j+1]==val && board[y-2][j+2]==val
-      && board[y-3][j+3]==val && val!=0){
+    if (val!==0 && board[y-1][j+1]==val && board[y-2][j+2]==val
+      && board[y-3][j+3]==val){
         return true;
     }
   }
@@ -200,21 +186,18 @@ function checkDraw(board){
 
 function removeHover(column){
   var id='ic'+column;
-  document.getElementById(id).src='blankWhite.png';
-
+  document.getElementById(id).src='images/blankWhite.png';
 }
 
-function removeBoardEvents(){
-/*make board unresponsive*/
-  clearBoard();
-}
+function theRules() {
+    alert("Object:    To win Connect Four you must be the first player to get four of your colored checkers in a row either horizontally, vertically or diagonally. \n"+
+  "\nHover above the board and click to drop your piece into place. Good Luck!");
+  }
 
 function clearBoard(){
   document.getElementById('winDraw').style.visibility='hidden';
   document.getElementById('playAgain').style.visibility='hidden';
   document.getElementById('topRow').style.visibility='visible';
-
-
 
   board = [[0,0,0,0,0,0],
                [0,0,0,0,0,0],
@@ -226,25 +209,26 @@ function clearBoard(){
     for(var i=0;i<=6;i++){
       for(var j=1;j<=6;j++){
         var id= i +" "+ j; /*sets up the variable as a string*/
-        document.getElementById(id).src='blank.png';
+        document.getElementById(id).src='images/blank.png';
       }
     }
 }
 
 function hoverPiece(column){
-
   var id='ic'+column;
   if(currentPlayer==1){
-    var check= document.getElementById(id).src='redhover.png';
+    var check= document.getElementById(id).src='images/redhover.png';
   }
   else {
-    document.getElementById(id).src='yellowhover.png';
+    document.getElementById(id).src='images/yellowhover.png';
   }
-
 }
 
 
-/*LISTENERS*/
+/*LISTENERS
+
+Adds listeners to every div element in the board
+listeners for mouse move, mouse exit, and click  */
 function gameStart(){
 document.getElementById("c1").addEventListener("mousemove", function (){hoverPiece(1)});
 document.getElementById("c2").addEventListener("mousemove", function (){hoverPiece(2)});
