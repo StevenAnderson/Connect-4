@@ -205,7 +205,6 @@ a:link {
 }
 .tableHeader {
   display: table-header-group;
-  border-top: 5px solid #9c1f2d;
 
  }
 .rTableBody { display: table-row-group; }
