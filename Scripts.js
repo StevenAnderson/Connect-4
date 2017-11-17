@@ -105,40 +105,48 @@ function placePiece(column){
   if(winningMove==true){
     var winPlayer;
     document.getElementById('winDraw').style.visibility='visible';
-    if(currentPlayer==1)
+    if(currentPlayer==1){
       winPlayer='Yellow';
+      winners.push(2);
+    }
     else {
       winPlayer='Red';
+      winners.push(1);
     }
     document.getElementById('winDraw').innerHTML= winPlayer + " Player Wins!";
     playAgain();
-    /*make a html element that displays the most recent winner
-    ask for a new game
-    wipes the board to a new one
-    and updates the score board*/
+
   }
   if(draw==true){
     document.getElementById('winDraw').style.visibility='visible';
     document.getElementById('winDraw').innerHTML='A Draw!' ;
     playAgain();
 
-    /*display in the previous winner html element a draw
-    ask for a new game
-    no update to score board
-    consider combinging the wipe board function and a new game question*/
 
   }
 
 /*
 TRY TO MAKE WHOLE COLUMS HOVER ABLE INSTEAD OF JUST TOP row
-SCORE BOARD AND RESETTING THE BOARD BY REPLACING INNER HTML WITH ORIG code
 */
 }
 
 function playAgain(){
+  document.getElementById('topRow').style.visibility='hidden';
   document.getElementById('playAgain').style.visibility='visible';
   document.getElementById("playAgain-yes").addEventListener("click", function(){ clearBoard()});
   document.getElementById("playAgain-no").addEventListener("click", function(){ thankYou()});
+  var p1Wins=0;
+  var p2Wins=0;
+  for(var i=0;i<winners.length;i++){
+    if(winners[i]==1){
+      p1Wins++;
+    }
+    else {
+      p2Wins++;
+    }
+  }
+  document.getElementById('playerOneWins').innerHTML="Wins: " + p1Wins;
+  document.getElementById('playerTwoWins').innerHTML="Wins: " + p2Wins;
 
 }
 function thankYou(){
@@ -146,6 +154,8 @@ function thankYou(){
   document.getElementById('winDraw').style.visibility='visible';
   document.getElementById('winDraw').innerHTML='Thanks for playing!';
   document.getElementById('board').style.visibility='hidden';
+  document.getElementById('p1').src='redplayer2.png';
+  document.getElementById('p2').src='yellowplayer2.png';
 
 
 
@@ -234,12 +244,9 @@ function removeBoardEvents(){
 function clearBoard(){
   document.getElementById('winDraw').style.visibility='hidden';
   document.getElementById('playAgain').style.visibility='hidden';
-  /*switch player so loser starts*/
-  if(currentPlayer==1)
-    currentPlayer=2;
-  else {
-    currentPlayer=1;
-  }
+  document.getElementById('topRow').style.visibility='visible';
+
+
 
   board = [[0,0,0,0,0,0],
                [0,0,0,0,0,0],
@@ -267,82 +274,3 @@ function hoverPiece(column){
   }
 
 }
-
-/*START OF FUNCTIONS*/
-  /*highlight current players piece*/
-
-/*
-
--add to the board text wise
--change image to whatever is highest
-#check for victory
--check for Draw
--switch current player2
-
-use this once columns fill up
-  "column_id".removeEventListener("click", myFunction);
-*/
-
-
-/*
-  if(checkDraw(board)==true){
-    alert("A Draw! Play again to determine the winner!");
-  }
-
-  currentPlayer= nextPlayer(player1, player2, currentPlayer);
-  highlightPlayer(currentPlayer);
-
-
-function placePiece( board, currentPlayer ){
-
-
-
-}
-
-function highlightPlayer(currentPlayer){
-  if(currentPlayer=='p1'){
-    document.getElementById('p1').src='redplayer1.png';
-    document.getElementById('p2').src='yellowplayer2.png';
-  }
-  if(currentPlayer=='p2'){
-    document.getElementById('p1').src='redplayer2.png';
-    document.getElementById('p2').src='yellowplayer1.png';
-  }
-}
-
-function nextPlayer( player1,  player2,  currentPlayer){
-  if(currentPlayer==player1)
-    currentPlayer=player2;
-  else{
-    currentPlayer=player1;
-  }
-  return currentPlayer;
-}
-
-function checkDraw( board){
-  var i=0, j=0;
-  for (i,i<5;i++){
-    for (j,j<6;j++){
-      if (board[i][j]==0)
-        return true;
-      else {
-        return false;
-      }
-    }
-  }
-}
-
-
-{
-/* and prompt for a new game..
-document.getElementById('play').innerHTMl='Play again?';
-document.getElementById('play').style.display='inline';
-/*need a score board update function
-}
-
-
-
-
-/* upon a winner, html play again prompts at the bottom
-
-*/

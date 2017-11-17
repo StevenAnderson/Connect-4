@@ -14,7 +14,7 @@
     <header>
       <div id="banner">
           <!--<img src="banner.png" alt="Connect 4 Banner">-->
-          CO NN EC T4
+          CONNECT 4
       </div>
 
     </header>
@@ -38,7 +38,7 @@
     </div>
     <span id = "player1">
       <input type="text" name="player 1" value="Player 1" style="text-align:center;
-        font-weight:bold; font-size:20px; width:150px;">
+        font-weight:bold; font-size:20px; width:150px; border-radius:15px;">
           <!-- move these styles to sheet-->
       <br>
       <img id = "p1" src="redplayer2.png" alt="Yellow Piece">
@@ -47,7 +47,7 @@
 
     <span id = "player2">
       <input type="text" name="player 2" value="Player 2" style="text-align:center;
-        font-weight:bold; font-size:20px; width:150px;">
+        font-weight:bold; font-size:20px; width:150px;  border-radius:15px;">
       <br>
       <img id = "p2" src="yellowplayer2.png" alt="Yellow Piece">
     </span>
@@ -123,8 +123,12 @@
     </div>
     <div id='winDraw'>Placeholder text
     </div>
-
-
+    <span id='playerOneWins'>Wins:
+      <span id=p1Score>0</span>
+    </span>
+    <span id='playerTwoWins'>Wins:
+      <span id=p2Score>0</span>
+    </span>
 
 
   </body>

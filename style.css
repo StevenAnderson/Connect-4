@@ -1,6 +1,7 @@
 /* Style Sheet for Connect 4  */
 
 body {
+  font-family:Lucida, sans-serif;
     background-color: #742f42;
     align: center;
     margin:0px;
@@ -21,28 +22,32 @@ img{
 }
 #player1{
     float: left;
-    padding-left:20px;
+    padding-left:5%;
 
+}
+#c1{
+  margin-bottom:300px;
 }
 #player2{
     float: right;
     position:relative;
-    padding-right:20px;
+    padding-right:5%;
 
 }
 #winDraw{
   margin:auto;
   align:center;
   visibility: hidden;
-  font-family:Verdana, sans-serif;
+  font-family:Lucida, sans-serif;
   font-size: 3em;
   font-weight:bold;
   text-align: center;
   color: white;
+  border-radius: 10px;
 
 }
 #banner{
-  font-family: Verdana, sans-serif;
+  font-family:Lucida, sans-serif;
   font-style: normal;
   font-size: 5em;
   margin:auto;
@@ -54,16 +59,32 @@ img{
   margin-bottom: 15px;
   */
 }
+#playerOneWins{
+  float: left;
+  padding-left:5%;
+  font-family:Lucida, sans-serif;
+  font-size: 2em;
+  color:white;
+}
+#playerTwoWins{
+  float: right;
+  padding-right:5%;
+  font-family:Lucida, sans-serif;
+  font-size: 2em;
+  color:white;
 
+}
 
 .button{
-  font-family:Verdana, sans-serif;
+  font-family:Lucida, sans-serif;
   font-size: 1em;
   border: none;
   background-color: #f9b508;
   margin-left: 15px;
   margin-right: 15px;
   border: 1px solid #f9b508;
+  border-radius: 10px;
+
 
 }
 .button:hover{
@@ -86,7 +107,7 @@ tr:hover {
        }
        /*
 #play{
-  font-family:Verdana, sans-serif;
+  font-family:Lucida, sans-serif;
   font-size: 2em;
   font-weight:bold;
   text-align: center;
@@ -138,19 +159,23 @@ a:link {
   margin-top: 15px;
   width:300px;
   align-items: center;
-  font-family:Verdana, sans-serif;
+  font-family:Lucida, sans-serif;
   font-size: 1em;
   text-align: center;
   padding:3px;
+  border-radius: 10px;
+
 }
 #playAgain-yes,#playAgain-no{
-  font-family:Verdana, sans-serif;
+  font-family:Lucida, sans-serif;
   font-size: 1em;
   border: none;
   background-color: #9c1f2d;
   margin-left: 15px;
   margin-right: 15px;
   border: 1px solid #9c1f2d;
+  border-radius: 10px;
+
 }
 
 #playAgain-yes:hover,#playAgain-no:hover {
@@ -165,13 +190,24 @@ a:link {
   text-align: center;
 
 }
+#topRow{
+  visibility: visible;
+
+}
 .board {
   margin:auto;
   display: table;
   visibility:visible;
         }
-.tableRow { display: table-row; }
-.tableHeader { display: table-header-group; }
+.tableRow {
+  display: table-row;
+  visibility: visible
+}
+.tableHeader {
+  display: table-header-group;
+  border-top: 5px solid #9c1f2d;
+
+ }
 .rTableBody { display: table-row-group; }
 .rTableFoot { display: table-footer-group; }
 .tableCell, .tableHeader { display: table-cell; }
