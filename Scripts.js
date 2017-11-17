@@ -1,7 +1,6 @@
 /*GLOBAL VARIABLES*/
 
 var player1=1, player2=2;
-var turn=1;
 var currentPlayer=1;
 var win=0;
 var winningPlayer=0;
@@ -22,9 +21,33 @@ var board = [[0,0,0,0,0,0],
 function placePiece(column){
   var winningMove=false;
   var draw=false;
-  var i=6
+
   var placement=6;
   if(gameOver==false){
+    placePieceLowest(placement,column);
+
+    if(checkDraw()){
+      draw=true;
+    }
+    if(checkHor(column, placement) || checkVer(column, placement) ||
+          checkDia1(column, placement)|| checkDia2(column, placement)){
+      winningMove=true;
+    }
+    if(winningMove===true){
+      declareWinner();
+    }
+
+    if(draw===true && winningMove===false){
+      document.getElementById('winDraw').style.visibility='visible';
+      document.getElementById('winDraw').innerHTML='A Draw!' ;
+      playAgain();
+      gameOver=true;
+    }
+  }
+}
+
+function placePieceLowest(placement,column){
+  var i=6
   for(i;i>=0;i--){
     if(board[i][column-1]===0){
 
@@ -50,62 +73,37 @@ function placePiece(column){
     else if(i===0){
       /*no placement allowed*/
       alert("Please click on a valid placement.");
-    }
-  }
-  if(checkDraw(board)){
-    draw=true;
-  }
-  if(checkHor(board,column, placement)){
-    winningMove=true;
-  }
-  if(checkVer(board,column, placement)){
-    winningMove=true;
-  }
-  if(checkDia1(board,column, placement)){
-    winningMove=true;
-  }
-  if(checkDia2(board,column, placement)){
-    winningMove=true;
-  }
-  if(winningMove===true){
-    var winPlayer;
-    gameOver=true;
-    document.getElementById('winDraw').style.visibility='visible';
-    if(currentPlayer===1){
-        var namep2=document.getElementById('input2').value ;
-        if (namep2.length<25){
-          winPlayer=namep2;
-        }
-        else {
-          winPlayer='Yellow Player';
-          document.getElementById('input2').value='Yellow Player';
-        }
-      winners.push(2);
-    }
-    else {
-      var namep1=document.getElementById('input1').value ;
-      if (namep1.length<25){
-        winPlayer=namep1;
       }
-      else {
-        winPlayer='Red Player';
-        document.getElementById('input1').value='Red Player';
-      }
-         winners.push(1);
-    }
-
-    document.getElementById('winDraw').innerHTML= winPlayer + " Wins!";
-    playAgain();
-  }
-
-  if(draw===true && winningMove===false){
-    document.getElementById('winDraw').style.visibility='visible';
-    document.getElementById('winDraw').innerHTML='A Draw!' ;
-    playAgain();
-    gameOver=true;
   }
 }
-
+function declareWinner(){
+  var winPlayer;
+  gameOver=true;
+  document.getElementById('winDraw').style.visibility='visible';
+  if(currentPlayer===1){
+      var namep2=document.getElementById('input2').value ;
+      if (namep2.length<25){
+        winPlayer=namep2;
+      }
+      else {
+        winPlayer='Yellow Player';
+        document.getElementById('input2').value='Yellow Player';
+      }
+    winners.push(2);
+  }
+  else {
+    var namep1=document.getElementById('input1').value ;
+    if (namep1.length<25 && namep1.length>0){
+      winPlayer=namep1;
+    }
+    else {
+      winPlayer='Red Player';
+      document.getElementById('input1').value='Red Player';
+    }
+       winners.push(1);
+  }
+  document.getElementById('winDraw').innerHTML= winPlayer + " Wins!";
+  playAgain();
 }
 
 function playAgain(){
@@ -136,7 +134,7 @@ function thankYou(){
   document.getElementById('p2').src='yellowplayer2.png';
 }
 
-function checkHor(board,column,placement){
+function checkHor(column,placement){
   /*horizontal win check*/
     var piece=board[placement][column-1];
     for (var j=0;j<=2;j++){
@@ -148,7 +146,7 @@ function checkHor(board,column,placement){
     }
     return false;
   }
-function checkVer(board,column,placement){
+function checkVer(column,placement){
   /*vertical win check*/
     var piece=board[placement][column-1];
     for (var j=0;j<=3;j++){
@@ -162,7 +160,7 @@ function checkVer(board,column,placement){
   }
 
 
-function checkDia1(board,column,placement){
+function checkDia1(column,placement){
     /*diagonal down and right win check*/
       var piece=board[placement][column-1];
       for (var j=0;j<=2;j++){
@@ -176,7 +174,7 @@ function checkDia1(board,column,placement){
     }
   return false;
   }
-function checkDia2(board,column,placement){
+function checkDia2(column,placement){
   /*up and right /// */
   var piece=board[placement][column-1];
   for (var j=0;j<=2;j++){
@@ -191,7 +189,7 @@ function checkDia2(board,column,placement){
 return false;
 }
 
-function checkDraw(board){
+function checkDraw(){
   var check=0;
   for (var i=0;i<=5;i++){
     for (var j=0; j<=6;j++){
@@ -211,8 +209,9 @@ function removeHover(column){
 
 function theRules() {
     alert("Object:    To win Connect Four you must be the first player to get four of your colored checkers in a row either horizontally, vertically or diagonally. \n"+
-  "\nHover above the board and click to drop your piece into place. Good Luck!" +
-  "\n \nReplace 'Red/Yellow player' with whichever name you desire. Please keep it under 25 characters though.");
+  "\nHover above the board and click to drop your piece into place. " +
+  "\n \nReplace 'Red/Yellow player' with whichever name you desire. Please keep it under 25 characters though." +
+  "\n \n Good Luck!");
   }
 
 function clearBoard(){
@@ -252,204 +251,22 @@ function hoverPiece(column){
 Adds listeners to every div element in the board
 listeners for mouse move, mouse exit, and click  */
 function gameStart(){
-document.getElementById("c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("c6").addEventListener("click", function (){placePiece(6)});
+  var id="";
+  for(var i=1;i<=6;i++){/*top row event listeners*/
+    id="c"+i;
+    gameStartExt(id,i);
+  }
+  for(var i=1;i<=7;i++){/* Event listeners by Row*/
+    for(var j=1;j<=6;j++){/*Event listeners by column*/
+      id=i+"c"+j;
+      gameStartExt(id,j);
+    }
+  }
+}
 
-document.getElementById("1c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("1c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("1c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("1c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("1c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("1c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("1c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("1c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("1c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("1c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("1c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("1c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("1c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("1c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("1c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("1c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("1c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("1c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("1c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("1c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("1c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("1c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("1c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("1c6").addEventListener("click", function (){placePiece(6)});
-
-document.getElementById("2c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("2c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("2c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("2c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("2c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("2c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("2c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("2c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("2c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("2c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("2c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("2c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("2c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("2c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("2c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("2c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("2c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("2c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("2c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("2c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("2c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("2c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("2c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("2c6").addEventListener("click", function (){placePiece(6)});
-
-document.getElementById("3c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("3c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("3c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("3c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("3c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("3c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("3c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("3c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("3c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("3c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("3c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("3c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("3c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("3c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("3c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("3c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("3c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("3c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("3c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("3c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("3c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("3c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("3c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("3c6").addEventListener("click", function (){placePiece(6)});
-
-document.getElementById("4c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("4c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("4c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("4c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("4c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("4c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("4c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("4c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("4c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("4c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("4c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("4c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("4c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("4c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("4c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("4c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("4c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("4c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("4c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("4c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("4c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("4c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("4c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("4c6").addEventListener("click", function (){placePiece(6)});
-
-document.getElementById("5c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("5c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("5c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("5c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("5c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("5c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("5c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("5c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("5c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("5c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("5c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("5c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("5c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("5c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("5c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("5c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("5c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("5c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("5c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("5c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("5c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("5c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("5c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("5c6").addEventListener("click", function (){placePiece(6)});
-
-document.getElementById("6c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("6c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("6c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("6c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("6c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("6c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("6c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("6c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("6c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("6c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("6c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("6c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("6c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("6c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("6c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("6c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("6c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("6c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("6c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("6c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("6c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("6c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("6c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("6c6").addEventListener("click", function (){placePiece(6)});
-
-document.getElementById("7c1").addEventListener("mousemove", function (){hoverPiece(1)});
-document.getElementById("7c2").addEventListener("mousemove", function (){hoverPiece(2)});
-document.getElementById("7c3").addEventListener("mousemove", function (){hoverPiece(3)});
-document.getElementById("7c4").addEventListener("mousemove", function (){hoverPiece(4)});
-document.getElementById("7c5").addEventListener("mousemove", function (){hoverPiece(5)});
-document.getElementById("7c6").addEventListener("mousemove", function (){hoverPiece(6)});
-document.getElementById("7c1").addEventListener("mouseout", function (){removeHover(1)});
-document.getElementById("7c2").addEventListener("mouseout", function (){removeHover(2)});
-document.getElementById("7c3").addEventListener("mouseout", function (){removeHover(3)});
-document.getElementById("7c4").addEventListener("mouseout", function (){removeHover(4)});
-document.getElementById("7c5").addEventListener("mouseout", function (){removeHover(5)});
-document.getElementById("7c6").addEventListener("mouseout", function (){removeHover(6)});
-document.getElementById("7c1").addEventListener("click", function (){removeHover(1)});
-document.getElementById("7c2").addEventListener("click", function (){removeHover(2)});
-document.getElementById("7c3").addEventListener("click", function (){removeHover(3)});
-document.getElementById("7c4").addEventListener("click", function (){removeHover(4)});
-document.getElementById("7c5").addEventListener("click", function (){removeHover(5)});
-document.getElementById("7c6").addEventListener("click", function (){removeHover(6)});
-document.getElementById("7c1").addEventListener("click", function (){placePiece(1)});
-document.getElementById("7c2").addEventListener("click", function (){placePiece(2)});
-document.getElementById("7c3").addEventListener("click", function (){placePiece(3)});
-document.getElementById("7c4").addEventListener("click", function (){placePiece(4)});
-document.getElementById("7c5").addEventListener("click", function (){placePiece(5)});
-document.getElementById("7c6").addEventListener("click", function (){placePiece(6)});
-
+function gameStartExt(id,i){
+  document.getElementById(id).addEventListener("mousemove", function (){hoverPiece(i)});
+  document.getElementById(id).addEventListener("mouseout", function (){removeHover(i)});
+  document.getElementById(id).addEventListener("click", function (){removeHover(i)});
+  document.getElementById(id).addEventListener("click", function (){placePiece(i)});
 }
