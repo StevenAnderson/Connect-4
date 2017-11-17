@@ -31,16 +31,16 @@ function placePiece(column){
         var id= i +" "+ column; /*sets up the variable as a string*/
 
         if(currentPlayer==1){
-          document.getElementById(id).src='images/red1.png';
+          document.getElementById(id).src='red1.png';
           currentPlayer=2;
-          document.getElementById('p1').src='images/redplayer2.png';
-          document.getElementById('p2').src='images/yellowplayer1.png';
+          document.getElementById('p1').src='redplayer2.png';
+          document.getElementById('p2').src='yellowplayer1.png';
         }
         else {
-          document.getElementById(id).src='images/yellow1.png';
+          document.getElementById(id).src='yellow1.png';
           currentPlayer=1;
-          document.getElementById('p1').src='images/redplayer1.png';
-          document.getElementById('p2').src='images/yellowplayer2.png';
+          document.getElementById('p1').src='redplayer1.png';
+          document.getElementById('p2').src='yellowplayer2.png';
 
         }
         placement=i;
@@ -112,8 +112,8 @@ function thankYou(){
   document.getElementById('winDraw').style.visibility='visible';
   document.getElementById('winDraw').innerHTML='Thanks for playing!';
   document.getElementById('board').style.visibility='hidden';
-  document.getElementById('p1').src='images/redplayer2.png';
-  document.getElementById('p2').src='images/yellowplayer2.png';
+  document.getElementById('p1').src='redplayer2.png';
+  document.getElementById('p2').src='yellowplayer2.png';
 }
 
 function checkHor(board,column,placement){
@@ -186,7 +186,7 @@ function checkDraw(board){
 
 function removeHover(column){
   var id='ic'+column;
-  document.getElementById(id).src='images/blankWhite.png';
+  document.getElementById(id).src='blankWhite.png';
 }
 
 function theRules() {
@@ -209,7 +209,7 @@ function clearBoard(){
     for(var i=0;i<=6;i++){
       for(var j=1;j<=6;j++){
         var id= i +" "+ j; /*sets up the variable as a string*/
-        document.getElementById(id).src='images/blank.png';
+        document.getElementById(id).src='blank.png';
       }
     }
 }
@@ -217,10 +217,10 @@ function clearBoard(){
 function hoverPiece(column){
   var id='ic'+column;
   if(currentPlayer==1){
-    var check= document.getElementById(id).src='images/redhover.png';
+    var check= document.getElementById(id).src='redhover.png';
   }
   else {
-    document.getElementById(id).src='images/yellowhover.png';
+    document.getElementById(id).src='yellowhover.png';
   }
 }
 
