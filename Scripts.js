@@ -7,7 +7,6 @@ var winningPlayer=0;
 var pieceLocation=-1;
 var winners=[];
 var gameOver=false;
-
 var board = [[0,0,0,0,0,0],
              [0,0,0,0,0,0],
              [0,0,0,0,0,0],
@@ -18,13 +17,15 @@ var board = [[0,0,0,0,0,0],
 
 
 /*FUNCTIONS*/
+
+/* placePiece drops a piece into position and checks if its a winner */
 function placePiece(column){
   var winningMove=false;
   var draw=false;
 
   var placement=6;
   if(gameOver==false){
-    placePieceLowest(placement,column);
+    placement=placePieceLowest(placement,column);
 
     if(checkDraw()){
       draw=true;
@@ -46,6 +47,9 @@ function placePiece(column){
   }
 }
 
+/* sub function of placePiece*/
+/* switches images at the lowest possible point */
+/* returns the point to which it falls*/
 function placePieceLowest(placement,column){
   var i=6
   for(i;i>=0;i--){
@@ -75,7 +79,11 @@ function placePieceLowest(placement,column){
       alert("Please click on a valid placement.");
       }
   }
+  return placement;
 }
+
+/* upon a winning move, Displays winning message and player*/
+/* Adds the win to winners array*/
 function declareWinner(){
   var winPlayer;
   gameOver=true;
@@ -106,6 +114,8 @@ function declareWinner(){
   playAgain();
 }
 
+/* shows prompt for another game*/
+/* updates score board*/
 function playAgain(){
   document.getElementById('topRow').style.visibility='hidden';
   document.getElementById('playAgain').style.visibility='visible';
@@ -125,6 +135,7 @@ function playAgain(){
   document.getElementById('playerTwoWins').innerHTML="Wins: " + p2Wins;
 }
 
+/*upon a 'no' from playAgain(), thanks the players for playing */
 function thankYou(){
   document.getElementById('playAgain').style.visibility='hidden';
   document.getElementById('winDraw').style.visibility='visible';
@@ -134,18 +145,20 @@ function thankYou(){
   document.getElementById('p2').src='yellowplayer2.png';
 }
 
+/* winning move checks for Hor, Vert, and diagonal wins*/
 function checkHor(column,placement){
   /*horizontal win check*/
     var piece=board[placement][column-1];
     for (var j=0;j<=2;j++){
       var val=board[placement][j];
-      if (val!==0 && board[placement][j+1]===val && board[placement][j+2]===val
-        && board[placement][j+3]===val){
+      if (val!==0 && board[placement][j+1]==val && board[placement][j+2]==val
+        && board[placement][j+3]==val){
           return true;
       }
     }
     return false;
   }
+
 function checkVer(column,placement){
   /*vertical win check*/
     var piece=board[placement][column-1];
@@ -188,7 +201,7 @@ function checkDia2(column,placement){
 }
 return false;
 }
-
+/* checks to see if theres any open spots on the board*/
 function checkDraw(){
   var check=0;
   for (var i=0;i<=5;i++){
@@ -202,18 +215,20 @@ function checkDraw(){
   return false;
 }
 
+/* switches image at top row to cancel hover effect*/
 function removeHover(column){
   var id='ic'+column;
   document.getElementById(id).src='blankWhite.png';
 }
 
+/*  alert to display the rules*/
 function theRules() {
     alert("Object:    To win Connect Four you must be the first player to get four of your colored checkers in a row either horizontally, vertically or diagonally. \n"+
   "\nHover above the board and click to drop your piece into place. " +
   "\n \nReplace 'Red/Yellow player' with whichever name you desire. Please keep it under 25 characters though." +
   "\n \n Good Luck!");
   }
-
+/* resets visibilities and board values and other variables for a new game*/
 function clearBoard(){
   document.getElementById('winDraw').style.visibility='hidden';
   document.getElementById('playAgain').style.visibility='hidden';
@@ -234,7 +249,7 @@ function clearBoard(){
       }
     }
 }
-
+/* switches top row images to simulate a hovering piece*/
 function hoverPiece(column){
   var id='ic'+column;
   if(currentPlayer===1){
