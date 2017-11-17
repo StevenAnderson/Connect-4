@@ -21,8 +21,10 @@ img{
 }
 
 footer{
+
   padding-top: 50px;
   text-align: center;
+
 }
 
 .button{
@@ -76,12 +78,22 @@ a:link {
     text-decoration: none;
 }
 
-#input{
+.input{
   text-align: center;
   font-weight:bold;
   font-size:20px;
   width:150px;
   border-radius:15px;"
+}
+
+#name1{
+  border-top: 3px solid  #9c1f2d;
+  padding-top: 15px;
+  height: 10px;
+  width:50%;
+  margin: auto;
+  text-align: center;
+  align-items: center;
 }
 
 #playAgain{
